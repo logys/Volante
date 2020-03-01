@@ -12,6 +12,8 @@
 	#include "spy_usbdrv.h"
 #endif
 
+#include<stdint.h>
+#include"gamepad.h"
 
 int main(void);
 int mainApp(void);

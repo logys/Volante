@@ -45,4 +45,5 @@ remove: clean
 	$(rm) $(BINDIR)/$(TARGET)
 	@echo "Executable removed!"
 
-flash: all
+flash: $(TARGET).hex
+	avrdude -p m328p -P /dev/ttyACM0 -c arduino -b 19200 -U flash:w:$(BINDIR)/$(TARGET).hex

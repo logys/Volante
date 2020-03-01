@@ -2,6 +2,7 @@
 
 #include "main.h"
 #include "mock_spy_usbdrv.h"
+#include "mock_gamepad.h"
 void setUp(void)
 {
 }

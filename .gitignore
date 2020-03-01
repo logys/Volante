@@ -54,3 +54,6 @@ dkms.conf
 build/
 bin/
 objects/
+Diagrama/
+Docs/
+*.swp

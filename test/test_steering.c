@@ -13,10 +13,14 @@ void tearDown(void)
 {
 	closeSteering();
 }
-
+static void setFlagADCconvertedFinished(void)
+{
+	ADCSRA |= (1<<ADIF);
+}
 void test_get_value(void)
 {
-	ADCH = 200;
-	ADCSRA |= (1<<ADIF);
-	TEST_ASSERT_EQUAL(ADCH, getSteeringValue());
+	short value_from_ADC = 200;
+	ADCH = value_from_ADC;
+	setFlagADCconvertedFinished();
+	TEST_ASSERT_EQUAL(value_from_ADC, getSteeringValue());
 }

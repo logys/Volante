@@ -1,8 +1,12 @@
 #include "driverADC.h"
-static void setRefADC(void)
+static void setRefADCOne(void)
 {
-        ADMUX |= (1<<REFS0);
-        ADMUX &= ~(1<<REFS1);
+        ADMUX |= (1<<REFS1)|(1<<REFS0);
+}
+static void setRefADCFive(void)
+{
+        ADMUX |= (1<<REFS1);
+        ADMUX &= ~(1<<REFS0);
 }
 static void alingToLeftADC(void)
 {
@@ -19,15 +23,27 @@ static void enableADC(void)
 }
 void initDriverAdc(void)
 {
-	setRefADC();
+	setRefADCFive();
 	alingToLeftADC();
 	setPreescaler();
 	enableADC();
 }
 
-static void selectChannelCero(void)
+static void selectChannel(ADC_CHANNEL channel)
 {
-	ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0));
+	if(channel == STEERING){
+		setRefADCFive();
+		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0));
+	}
+	else if(channel == THROTTLE){
+		setRefADCOne();
+		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(0<<MUX0));
+		ADMUX |= 1<<MUX0;
+	}else if(channel == BRAKE){
+		setRefADCOne();
+		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(0<<MUX1)|(0<<MUX0));
+		ADMUX |= 1<<MUX1;
+	}
 }
 static void startConversion(void)
 {
@@ -37,7 +53,10 @@ static void startConversion(void)
 }
 uint8_t getAdc(ADC_CHANNEL channel)
 {
-	selectChannelCero();
+	selectChannel(channel);
 	startConversion();
 	return ADCH;
+}
+void adcRegisterChannel(short channel)
+{
 }

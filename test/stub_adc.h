@@ -23,5 +23,7 @@ uint8_t ADCSRA;
 
 uint8_t ADCH;
 
+#define ADC0 0
+#define ADC1 1
 
 #endif

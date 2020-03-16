@@ -27,7 +27,7 @@ int mainApp(void) {
         usbPoll();
 	updateGamepad();
 	if(usbInterruptIsReady()){
-		usbSetInterrupt((unsigned char *)getPointerToReport(), 2);
+		usbSetInterrupt((unsigned char *)getPointerToReport(), 4);
 	}
     }
 	

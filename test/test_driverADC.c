@@ -11,12 +11,6 @@ void tearDown(void)
 {
 }
 
-void test_init_ADC_ref(void)
-{
-        ADMUX = 0;
-        initDriverAdc();
-        TEST_ASSERT_BITS(0xC0, 0x41, ADMUX);
-}
 void test_init_left_adjust(void)
 {
         ADMUX = 0;
@@ -47,4 +41,10 @@ void test_on_request_check_steering_channel_to_cero(void)
 	ADMUX = 0xFF;
 	getAdc(STEERING);
 	TEST_ASSERT_BITS(0x0F, 0x00, ADMUX);
+}
+void test_register_a_adc_channel(void)
+{
+	adcRegisterChannel(ADC0);
+	getAdc(THROTTLE);
+	TEST_ASSERT_BITS(0x0F, 1, ADMUX);
 }

@@ -5,8 +5,8 @@ static void setRefADCOne(void)
 }
 static void setRefADCFive(void)
 {
-        ADMUX |= (1<<REFS1);
-        ADMUX &= ~(1<<REFS0);
+        ADMUX |= (1<<REFS0);
+        ADMUX &= ~(1<<REFS1);
 }
 static void alingToLeftADC(void)
 {

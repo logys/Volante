@@ -29,6 +29,9 @@ void initDriverAdc(void)
 	enableADC();
 }
 
+void closeDriverAdc(void)
+{
+}
 static void selectChannel(ADC_CHANNEL channel)
 {
 	if(channel == STEERING){

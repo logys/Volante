@@ -62,8 +62,8 @@ uint8_t *getPointerToReport(void)
 void updateGamepad(void)
 {
 	report[0] = getSteeringValue();
-	report[1] = getThrottleValue();
-	report[2] = getBrakeValue();
+	report[1] = getPedalValue(PEDAL_THROTTLE);
+	report[2] = getPedalValue(PEDAL_BRAKE);
 	report[3] = 127;
 	report[4] = getPaddleShifter();
 	report[5] = 127;

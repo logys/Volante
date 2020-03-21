@@ -9,8 +9,7 @@
 #include<stdint.h>
 #include<stdlib.h>
 #include"steering.h"
-#include"throttle.h"
-#include"brake.h"
+#include"pedals.h"
 #include"paddleShifter.h"
 
 void initGamepad(void);

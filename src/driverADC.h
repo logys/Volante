@@ -8,6 +8,7 @@
 typedef enum adc_channel{STEERING, THROTTLE, BRAKE}ADC_CHANNEL;
 
 void initDriverAdc(void);
+void closeDriverAdc(void);
 uint8_t getAdc(ADC_CHANNEL);
 void adcRegisterChannel(short);
 

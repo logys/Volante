@@ -15,5 +15,5 @@ uint8_t getPedalValue(PEDAL pedal)
 		return getAdc(THROTTLE);
 	else if(pedal == PEDAL_BRAKE)
 		return getAdc(BRAKE);
+	return 0;
 }
-

@@ -1,17 +1,31 @@
 #include "steering.h"
-void initSteering(void)
+static steering_driver steering;
+void steeringCreate(void)
 {
-	initDriverAdc();
+	steering = 0;
+	steering = encoderCreate();
 }
-void closeSteering(void)
+void steeringDestroy(steering_driver driver)
 {
+	if(!steering)
+		return ;
+	else if(steering->type == POTENTIOMETER)
+		potentiometerDestroy(driver);
+	else if(steering->type == ENCODER)
+		encoderDestroy(driver);
+	steering = NULL;
 }
-#define DEADZONE 30
-uint8_t getSteeringValue(void)
+uint8_t steeringGetValue(void)
 {
-	return getAdc(STEERING);
-//	if(ADCH > 126 && ADCH < (126+DEADZONE))
-//		return ADCH+DEADZONE;
-//	else
-//		return ADCH - DEADZONE;
+	if(steering->type == POTENTIOMETER)
+		return getPotentiometerValue();
+	else if(steering->type == ENCODER)
+		return getEncoderValue();
+	return 0;
+}
+
+void steeringAddDriver(steering_driver base)
+{
+	steeringDestroy(steering);
+	steering = base;
 }

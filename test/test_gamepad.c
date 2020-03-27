@@ -7,27 +7,27 @@
 
 void setUp(void)
 {
-	initSteering_Expect();
+	steeringCreate_Expect();
+	pedalsCreate_Expect();
 	initPaddleShifter_Expect();
 	initGamepad();
 }
 
 void tearDown(void)
 {
-	closeSteering_Ignore();
 	closeGamepad();
 }
 
 void test_initGamepad(void)
 {
-	initSteering_Expect();
+	steeringCreate_Expect();
+	pedalsCreate_Expect();
 	initPaddleShifter_Expect();
 	initGamepad();
 }
 
 void test_closeGamepad(void)
 {
-	closeSteering_Expect();
 	closeGamepad();
 }
 
@@ -42,7 +42,7 @@ void test_store_steering_to_byte_cero_of_report(void)
 	unsigned short data_from_throttle = 200;
 	unsigned short data_from_brake = 190;
 	unsigned short data_from_paddleShifter = 2;
-	getSteeringValue_ExpectAndReturn(data_from_steering);
+	steeringGetValue_ExpectAndReturn(data_from_steering);
 	getPedalValue_ExpectAndReturn(PEDAL_THROTTLE, data_from_throttle);
 	getPedalValue_ExpectAndReturn(PEDAL_BRAKE, data_from_brake);
 	getPaddleShifter_ExpectAndReturn(data_from_paddleShifter);

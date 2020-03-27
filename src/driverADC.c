@@ -31,22 +31,24 @@ void initDriverAdc(void)
 
 void closeDriverAdc(void)
 {
+	ADCSRA &= ~(1<<ADEN);
+}
+static void cleanMux(void)
+{
+	ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0));
 }
 static void selectChannel(ADC_CHANNEL channel)
 {
+	cleanMux();
 	if(channel == STEERING){
 		setRefADCFive();
-		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(1<<MUX0));
-	}
-	else if(channel == THROTTLE){
-		setRefADCOne();
-		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(1<<MUX1)|(0<<MUX0));
+		return ;
+	}else if(channel == THROTTLE){
 		ADMUX |= 1<<MUX0;
 	}else if(channel == BRAKE){
-		setRefADCOne();
-		ADMUX &= ~((1<<MUX3)|(1<<MUX2)|(0<<MUX1)|(0<<MUX0));
 		ADMUX |= 1<<MUX1;
 	}
+	setRefADCOne();
 }
 static void startConversion(void)
 {

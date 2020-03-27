@@ -45,3 +45,8 @@ void test_get_brake_value(void)
 	getAdc_ExpectAndReturn(BRAKE, actualValueFromBrake);
 	TEST_ASSERT_EQUAL(actualValueFromBrake, getPedalValue(PEDAL_BRAKE));
 }
+
+void test_incorrect_pedal_return_cero(void)
+{
+	TEST_ASSERT_EQUAL(0 , getPedalValue(42));
+}

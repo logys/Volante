@@ -8,6 +8,7 @@
 #endif
 #include<stdint.h>
 #include<stdlib.h>
+#include<stdbool.h>
 #include"steering.h"
 #include"pedals.h"
 #include"paddleShifter.h"

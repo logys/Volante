@@ -19,12 +19,14 @@ void potentiometerDestroy(steering_driver driver)
 	potentiometer_driver self =(potentiometer_driver) driver;
 	free(self);
 }
-#define DEADZONE 30
-uint8_t getPotentiometerValue()
+static uint8_t getPotentiometerValue(steering_driver driver)
 {
 	return getAdc(STEERING);
-//	if(ADCH > 126 && ADCH < (126+DEADZONE))
-//		return ADCH+DEADZONE;
-//	else
-//		return ADCH - DEADZONE;
+}
+static steering_driver_interface_struct potentiometer_interface = {
+	.steeringGetValue = getPotentiometerValue
+};
+void potentiometerInstallInterface(void)
+{
+	steeringDriver_setInterface(&potentiometer_interface);
 }

@@ -9,7 +9,8 @@
 #include<stdint.h>
 #include<stdlib.h>
 #include<stdbool.h>
-#include"steering.h"
+#include"steering_driver.h"
+#include"steering_potentiometer.h"
 #include"pedals.h"
 #include"paddleShifter.h"
 

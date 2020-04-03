@@ -2,10 +2,10 @@
 #define STEERING_POTENTIOMETER_H
 
 #include<stdint.h>
-#include"steering.h"
+#include"steering_driver.h"
 #include"driverADC.h"
 steering_driver potentiometerCreate(void);
 void potentiometerDestroy(steering_driver);
-uint8_t getPotentiometerValue();
+void potentiometerInstallInterface(void);
 
-#endif // STEERING_H
+#endif // STEERING_POTENTIOMETER_H

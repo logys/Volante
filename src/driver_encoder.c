@@ -4,10 +4,12 @@ static int8_t last_a = 0;
 void initDriverEncoder(void)
 {
 	sei();
-	DDRB &= ~((1<<PB0)|(1<<PB1));
-	PORTB &= ~((1<<PB0)|(1<<PB1));
-	PCICR |= 1<<PCIE0;
-	PCMSK0 |= 1<<PCINT0;
+	DDRB &= ~((1<<PB0));
+	DDRD &= ~((1<<PD3));
+	PORTB |= ((1<<PB0));
+	PORTD |= ((1<<PD3));
+	EICRA |= (1<<ISC11)|(1<<ISC10);
+	EIMSK |= 1<<INT1;
 }
 
 void closeDriverEncoder(void)
@@ -16,17 +18,17 @@ void closeDriverEncoder(void)
 	counter = 0;
 }
 
-int8_t getValue(void)
+int16_t getValue(void)
 {
 	return counter;
 }
 
 static void updatePinEstate(int8_t * a, int8_t * b)
 {
-	*a = PINB & ( 1<<PB0);
-	*b = PINB & ( 1<<PB1);
+	*b = PINB & (1<<PB0);
+	*a = PIND & (1<<PD3);
 }
-ISR(PCINT0_vect)
+ISR(INT1_vect)
 {
 	static int8_t a;
 	static int8_t b;

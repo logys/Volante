@@ -48,11 +48,11 @@ void test_get_value(void)
 
 void test_bounded_values(void)
 {
-	int value_from_encoder = 7;
+	int value_from_encoder = 128;
 	getValue_ExpectAndReturn(value_from_encoder);
 	TEST_ASSERT_EQUAL(255, getEncoderValue());
 
-	value_from_encoder = -10;
+	value_from_encoder = -127;
 	getValue_ExpectAndReturn(value_from_encoder);
 	TEST_ASSERT_EQUAL(0, getEncoderValue());
 }

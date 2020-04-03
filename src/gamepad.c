@@ -44,9 +44,11 @@ const char usbHidReportDescriptor[] PROGMEM = {
 // 80 bytes
 };
 uint8_t report[8];
+steering_driver steering;
 void initGamepad(void)
 {
-	steeringCreate();
+	steering = potentiometerCreate();
+	potentiometerInstallInterface();
 	pedalsCreate();
 	initPaddleShifter();
 }
@@ -61,7 +63,7 @@ uint8_t *getPointerToReport(void)
 
 void updateGamepad(void)
 {
-	report[0] = steeringGetValue();
+	report[0] = steeringGetValue(steering);
 	report[1] = getPedalValue(PEDAL_THROTTLE);
 	report[2] = getPedalValue(PEDAL_BRAKE);
 	report[3] = 127;

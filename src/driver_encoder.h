@@ -10,7 +10,7 @@
 void initDriverEncoder(void);
 void closeDriverEncoder(void);
 
-int8_t getValue(void);
+int16_t getValue(void);
 
 
 #endif // DRIVER_ENCODER_H

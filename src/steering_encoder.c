@@ -23,7 +23,7 @@ void encoderDestroy(steering_driver driver)
 
 uint8_t getEncoderValue(void )
 {
-	static short value = 0;
+	int value ;
 	value = 127 + ENCODER_GAIN*getValue();
 	if(value > 255)
 		value = 255;

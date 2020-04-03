@@ -9,4 +9,11 @@ uint8_t PINB;
 #define PB2 2
 #define PB3 3
 
+uint8_t DDRD;
+uint8_t PORTD;
+uint8_t PIND;
+#define PD3 3
+
+uint8_t EIMSK;
+#define INT1 1
 #endif

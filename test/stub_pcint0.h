@@ -10,5 +10,9 @@ uint8_t PCICR;
 uint8_t PCMSK0;
 #define PCINT0 0
 
-ISR(PCINT0_vect);
+ISR(INT1_vect);
+
+uint8_t EICRA;
+#define ISC10 2
+#define ISC11 3
 #endif

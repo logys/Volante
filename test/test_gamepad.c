@@ -1,15 +1,17 @@
 #include "unity.h"
 
 #include "gamepad.h"
-#include "mock_steering.h"
+#include "steering_driver.h"
+#include "steering_potentiometer.h"
 #include "mock_pedals.h"
 #include "mock_paddleShifter.h"
+#include "mock_driverADC.h"
 
 void setUp(void)
 {
-	steeringCreate_Expect();
 	pedalsCreate_Expect();
 	initPaddleShifter_Expect();
+	initDriverAdc_Ignore();
 	initGamepad();
 }
 
@@ -20,10 +22,6 @@ void tearDown(void)
 
 void test_initGamepad(void)
 {
-	steeringCreate_Expect();
-	pedalsCreate_Expect();
-	initPaddleShifter_Expect();
-	initGamepad();
 }
 
 void test_closeGamepad(void)
@@ -35,14 +33,13 @@ void test_get_array_pointer(void)
 {
 	TEST_ASSERT_EQUAL(0, *getPointerToReport());
 }
-
 void test_store_steering_to_byte_cero_of_report(void)
 {
 	unsigned short data_from_steering = 255;
 	unsigned short data_from_throttle = 200;
 	unsigned short data_from_brake = 190;
 	unsigned short data_from_paddleShifter = 2;
-	steeringGetValue_ExpectAndReturn(data_from_steering);
+	getAdc_ExpectAndReturn(STEERING, data_from_steering);
 	getPedalValue_ExpectAndReturn(PEDAL_THROTTLE, data_from_throttle);
 	getPedalValue_ExpectAndReturn(PEDAL_BRAKE, data_from_brake);
 	getPaddleShifter_ExpectAndReturn(data_from_paddleShifter);

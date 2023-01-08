@@ -25,3 +25,11 @@ if (EXTERNAL_LIBS)
     )
 endif()
 
+add_custom_target(size
+	COMMAND arm-none-eabi-size -G ${PROJECT_NAME}.elf
+	DEPENDS ${PROJECT_NAME}.elf)
+
+add_custom_target(flash
+	COMMAND arm-none-eabi-objcopy -Obinary ${PROJECT_NAME}.elf 
+	${PROJECT_NAME}.bin && st-flash write ${PROJECT_NAME}.bin 0x8000000
+	DEPENDS ${PROJECT_NAME}.elf)

@@ -2,6 +2,8 @@ include_directories(inc)
 
 file(GLOB C_SOURCE
     main.c
+    usb.c
+    led.c
 )
 
 set_source_files_properties(${C_SOURCE}
@@ -25,7 +27,7 @@ if (EXTERNAL_LIBS)
     )
 endif()
 
-add_custom_target(size
+add_custom_target(size ALL
 	COMMAND arm-none-eabi-size -G ${PROJECT_NAME}.elf
 	DEPENDS ${PROJECT_NAME}.elf)
 

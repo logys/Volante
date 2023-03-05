@@ -16,9 +16,9 @@ set(STM32_DEFINES " \
     "
 )
 
-set(COMPILER_OPTIONS "-mcpu=cortex-m3")
+set(COMPILER_OPTIONS "-O2 -mcpu=cortex-m3")
 SET(CMAKE_C_FLAGS "${COMPILER_OPTIONS} \
-	-Werror -Wall -Os -Wextra -fstack-protector -pipe" 
+	-Werror -g -Wall -Wextra -fstack-protector -pipe" 
 	CACHE INTERNAL "c compiler flags")
 
 set(CMAKE_FIND_ROOT_PATH_MODE_PROGRAM NEVER)

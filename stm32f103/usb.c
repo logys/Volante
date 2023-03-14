@@ -1,7 +1,7 @@
 #include "usb.h"
 #include <libopencm3/usb/usbd.h>
 #include <libopencm3/usb/hid.h>
-#include <stddef.h>
+#include <stdlib.h>
 #include <libopencm3/stm32/gpio.h>
 #include <libopencm3/stm32/rcc.h>
 #include <libopencm3/usb/cdc.h>
@@ -48,6 +48,7 @@ static const struct usb_endpoint_descriptor data_endp[] = {{
 	.wMaxPacketSize = 64,
 	.bInterval = 1,
 }};
+
 static const struct {
 	struct usb_cdc_header_descriptor header;
 	struct usb_cdc_call_management_descriptor call_mgmt;
@@ -85,7 +86,7 @@ static const struct {
 static const struct usb_interface_descriptor comm_iface[] = {{
 	.bLength = USB_DT_INTERFACE_SIZE,
 	.bDescriptorType = USB_DT_INTERFACE,
-	.bInterfaceNumber = 1,
+	.bInterfaceNumber = 0,
 	.bAlternateSetting = 0,
 	.bNumEndpoints = 1,
 	.bInterfaceClass = USB_CLASS_CDC,
@@ -102,7 +103,7 @@ static const struct usb_interface_descriptor comm_iface[] = {{
 static const struct usb_interface_descriptor data_iface[] = {{
 	.bLength = USB_DT_INTERFACE_SIZE,
 	.bDescriptorType = USB_DT_INTERFACE,
-	.bInterfaceNumber = 2,
+	.bInterfaceNumber = 1,
 	.bAlternateSetting = 0,
 	.bNumEndpoints = 2,
 	.bInterfaceClass = USB_CLASS_DATA,
@@ -185,7 +186,7 @@ static const struct {
 static const struct usb_interface_descriptor hid_iface = {
 	.bLength = USB_DT_INTERFACE_SIZE,
 	.bDescriptorType = USB_DT_INTERFACE,
-	.bInterfaceNumber = 0,
+	.bInterfaceNumber = 2,
 	.bAlternateSetting = 0,
 	.bNumEndpoints = 1,
 	.bInterfaceClass = USB_CLASS_HID,
@@ -199,17 +200,17 @@ static const struct usb_interface_descriptor hid_iface = {
 };
 static const struct usb_interface ifaces[] = {
 	{.num_altsetting = 1,
-	.altsetting = &hid_iface},
-	{.num_altsetting = 1,
 	.altsetting = comm_iface},
 	{.num_altsetting = 1,
-	.altsetting = data_iface}
+	.altsetting = data_iface},
+	{.num_altsetting = 1,
+	.altsetting = &hid_iface}
 };
 static const struct usb_config_descriptor conf_descriptor = {
 	.bLength = USB_DT_CONFIGURATION_SIZE,
 	.bDescriptorType = USB_DT_CONFIGURATION,
 	.wTotalLength = 0,
-	.bNumInterfaces = 2,
+	.bNumInterfaces = 3,
 	.bConfigurationValue = 1,
 	.iConfiguration = 0,
 	.bmAttributes = 0xC0,
@@ -281,10 +282,8 @@ static enum usbd_request_return_codes cdcacm_control_request(usbd_device *usbd_d
 static void cdcacm_data_rx_cb(usbd_device *usbd_dev, uint8_t ep)
 {
 	(void)ep;
-
 	char buf[64];
 	int len = usbd_ep_read_packet(usbd_dev, 0x01, buf, 64);
-
 	if (len) {
 		usbd_ep_write_packet(usbd_dev, 0x82, buf, len);
 	}

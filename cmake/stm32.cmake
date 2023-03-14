@@ -7,6 +7,7 @@ set(CMAKE_C_COMPILER /usr/bin/arm-none-eabi-gcc)
 
 set(CMAKE_EXE_LINKER_FLAGS 
 	"-Wl,--gc-sections -nostartfiles --static \
+	-specs=nano.specs -specs=nosys.specs\
 	-Wl,-Map=${CMAKE_PROJECT_NAME}.map"
 	CACHE INTERNAL "Linker options")
 
@@ -16,7 +17,7 @@ set(STM32_DEFINES " \
     "
 )
 
-set(COMPILER_OPTIONS "-O2 -mcpu=cortex-m3")
+set(COMPILER_OPTIONS "-mthumb -O2 -mcpu=cortex-m3")
 SET(CMAKE_C_FLAGS "${COMPILER_OPTIONS} \
 	-Werror -g -Wall -Wextra -fstack-protector -pipe" 
 	CACHE INTERNAL "c compiler flags")
